@@ -1,1 +1,66 @@
 @import "tailwindcss";
+
+:root {
+    /* Dark Theme */
+    --color-bg: #000000;
+    --color-text: #e0e0e0;
+    --color-border: rgba(255, 255, 255, 0.1);
+    --color-border-hover: rgba(255, 255, 255, 0.2);
+    --color-card-bg: rgba(0, 0, 0, 0.2);
+    --color-card-shadow: rgba(255, 255, 255, 0.05);
+    --color-icon: #9ca3af;
+    /* gray-400 */
+    --color-link-hover: #e0e0e0;
+    /* gray-200 */
+    --color-modal-bg: rgba(0, 0, 0, 0.6);
+    --color-modal-card-bg-from: rgba(24, 24, 27, 0.95);
+    /* zinc-900/95 */
+    --color-modal-card-bg-to: rgba(0, 0, 0, 0.95);
+    /* black/95 */
+    --color-modal-text: #d1d5db;
+    /* gray-300 */
+    --color-modal-title: #e0e0e0;
+    /* gray-200 */
+    --color-modal-subtitle: #9ca3af;
+    /* gray-500 */
+    --color-modal-button-text: #e0e0e0;
+    /* gray-200 */
+    --color-modal-button-bg: rgba(255, 255, 255, 0.1);
+    --color-modal-button-bg-hover: rgba(255, 255, 255, 0.2);
+    --color-modal-button-border: rgba(255, 255, 255, 0.2);
+    --color-modal-button-border-hover: rgba(255, 255, 255, 0.3);
+    --color-modal-media-bg: rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="light"] {
+    /* Light Theme */
+    --color-bg: #ffffff;
+    --color-text: #333333;
+    --color-border: rgba(0, 0, 0, 0.1);
+    --color-border-hover: rgba(0, 0, 0, 0.2);
+    --color-card-bg: rgba(255, 255, 255, 0.8);
+    --color-card-shadow: rgba(0, 0, 0, 0.05);
+    --color-icon: #6b7280;
+    /* gray-500 */
+    --color-link-hover: #1f2937;
+    /* gray-800 */
+    --color-modal-bg: rgba(0, 0, 0, 0.4);
+    --color-modal-card-bg-from: rgba(255, 255, 255, 0.95);
+    --color-modal-card-bg-to: rgba(240, 240, 240, 0.95);
+    --color-modal-text: #4b5563;
+    /* gray-700 */
+    --color-modal-title: #1f2937;
+    /* gray-800 */
+    --color-modal-subtitle: #6b7280;
+    /* gray-500 */
+    --color-modal-button-text: #333333;
+    --color-modal-button-bg: rgba(0, 0, 0, 0.05);
+    --color-modal-button-bg-hover: rgba(0, 0, 0, 0.1);
+    --color-modal-button-border: rgba(0, 0, 0, 0.1);
+    --color-modal-button-border-hover: rgba(0, 0, 0, 0.2);
+    --color-modal-media-bg: rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: "Inter", sans-serif;
+}
