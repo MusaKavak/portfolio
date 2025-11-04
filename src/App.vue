@@ -95,14 +95,16 @@
           <h2 class="text-xl font-semibold">Contact</h2>
         </div>
         <div class="space-y-2 text-sm text-[var(--color-icon)]">
-          <a href="mailto:musa0kavak@gmail.com" class="hover:text-[var(--color-link-hover)] flex items-center gap-2">
+          <a href="mailto:musa0kavak@gmail.com" target="_blank"
+            class="hover:text-[var(--color-link-hover)] flex items-center gap-2">
             <Mail class="w-4 h-4" /> musa0kavak@gmail.com
           </a>
-          <a href="https://linkedin.com/in/musakavak"
+          <a href="https://linkedin.com/in/musakavak" target="_blank"
             class="hover:text-[var(--color-link-hover)] flex items-center gap-2">
-            <Linkedin class="w-4 h-4" /> linkedin.com/in/musakavak/
+            <Linkedin class="w-4 h-4" /> linkedin.com/in/musakavak
           </a>
-          <a href="https://github.com/musakavak" class="hover:text-[var(--color-link-hover)] flex items-center gap-2">
+          <a href="https://github.com/musakavak" target="_blank"
+            class="hover:text-[var(--color-link-hover)] flex items-center gap-2">
             <Github class="w-4 h-4" /> github.com/musakavak
           </a>
         </div>
@@ -120,11 +122,11 @@
           <!-- <a href="#" class="text-sm text-[var(--color-icon)] hover:text-[var(--color-link-hover)]">All posts</a> -->
         </div>
         <div class="flex gap-3 p-4">
-          <a v-for="(b, i) in blogs" :key="i" :href="b.url"
+          <a v-for="(b, i) in blogs" :key="i" :href="b.url" target="_blank"
             class="group relative rounded-lg overflow-hidden border border-[var(--color-border)] hover:border-[var(--color-border-hover)] transition-all duration-300">
             <img :src="b.thumbnail" class=" h-28 opacity-70 group-hover:opacity-100 transition" />
             <div
-              class="absolute inset-0 bg-gradient-to-t from-[var(--color-card-bg)] to-transparent opacity-0 group-hover:opacity-100 transition">
+              class="absolute inset-0 bg-gradient-to-t from-[var(--color-card-bg)] opacity-50 to-transparent transition">
             </div>
             <div class="absolute bottom-2 left-2">
               <h3 class="text-sm font-medium">{{ b.title }}</h3>
@@ -171,7 +173,7 @@
       <div v-if="activeProject" class="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
         <div class="absolute inset-0 bg-[var(--color-modal-bg)]" @click="closeProject"></div>
         <div
-          class="relative z-10 w-full max-w-3xl rounded-2xl border border-[var(--color-border)] bg-gradient-to-br from-[var(--color-modal-card-bg-from)] to-[var(--color-modal-card-bg-to)] backdrop-blur-xl p-6 md:p-8 shadow-2xl my-8"
+          class="relative z-10 w-full max-w-5xl rounded-2xl border border-[var(--color-border)] bg-gradient-to-br from-[var(--color-modal-card-bg-from)] to-[var(--color-modal-card-bg-to)] backdrop-blur-xl p-6 md:p-8 shadow-2xl my-8"
           role="dialog" aria-modal="true" aria-labelledby="project-dialog-title">
 
           <!-- Header -->
@@ -196,15 +198,14 @@
           <!-- Media -->
           <div class="mb-6 rounded-xl overflow-hidden border border-[var(--color-border)]">
             <template v-if="activeProject && isVideo(activeProject.thumbnail)">
-              <video :src="activeProject.thumbnail"
-                class="w-full max-h-96 object-contain bg-[var(--color-modal-media-bg)]" autoplay muted loop playsinline
-                preload="auto" disablePictureInPicture
+              <video :src="activeProject.thumbnail" class="w-full object-contain bg-[var(--color-modal-media-bg)]"
+                autoplay muted loop playsinline preload="auto" disablePictureInPicture
                 controlslist="nodownload noplaybackrate noremoteplayback nofullscreen" @pause="$event.target.play()"
                 @ended="$event.target.play()" @contextmenu.prevent />
             </template>
             <img v-else-if="activeProject && activeProject.thumbnail" :src="activeProject.thumbnail"
               :alt="activeProject.title" loading="lazy" decoding="async"
-              class="w-full max-h-96 object-contain bg-[var(--color-modal-media-bg)]" />
+              class="w-full object-contain bg-[var(--color-modal-media-bg)]" />
           </div>
 
           <!-- Technologies -->
@@ -232,6 +233,10 @@
       </div>
     </div>
   </div>
+
+  <!-- Flashbang Overlay -->
+  <div v-if="showFlashbang" :class="['flashbang-overlay', { 'fade-out': !flashbangActive }]"
+    :style="{ transitionDuration: flashbangDuration + 'ms' }"></div>
 </template>
 
 <script setup>
@@ -252,15 +257,38 @@
   } from "lucide-vue-next";
   import { ref, watch, nextTick, onBeforeUnmount, onMounted } from "vue";
 
-  // Helper to detect if a thumbnail is an MP4 video
   const isVideo = (src) => typeof src === 'string' && /\.mp4(\?.*)?$/i.test(src);
 
   const theme = ref(localStorage.getItem('theme') || 'dark');
+  const showFlashbang = ref(false);
+  const flashbangActive = ref(false)
+  const flashbangDuration = 2500
+  const flashbangSoundDelay = 0
+  const flashbangVolume = 0.5
+
+  const flashbangAudio = new Audio('/flashbang-cs.mp3');
+  flashbangAudio.volume = flashbangVolume;
 
   const toggleTheme = () => {
-    theme.value = theme.value === 'dark' ? 'light' : 'dark';
-    localStorage.setItem('theme', theme.value);
-    document.documentElement.setAttribute('data-theme', theme.value);
+    const newTheme = theme.value === 'dark' ? 'light' : 'dark';
+    if (newTheme === 'light') {
+      showFlashbang.value = true;
+      flashbangActive.value = true
+      setTimeout(() => {
+        flashbangAudio.play();
+      }, flashbangSoundDelay);
+
+      setTimeout(() => {
+        flashbangActive.value = false
+      }, flashbangDuration)
+
+      setTimeout(() => {
+        showFlashbang.value = false;
+      }, flashbangDuration + 3000)
+    }
+    theme.value = newTheme;
+    localStorage.setItem('theme', newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme);
   };
 
   onMounted(() => {
@@ -393,3 +421,22 @@
     window.removeEventListener("keydown", handleKeydown);
   });
 </script>
+
+<style>
+  .flashbang-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    opacity: 1;
+    z-index: 9999;
+    transition: opacity;
+    /* Duration will be set by JS */
+  }
+
+  .flashbang-overlay.fade-out {
+    opacity: 0;
+  }
+</style>
