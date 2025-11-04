@@ -12,11 +12,10 @@
       <section
         class="md:col-span-7 lg:col-span-8 md:order-1 border border-[var(--color-border)] rounded-2xl p-8 flex flex-col justify-end relative backdrop-blur-sm hover:shadow-[0_0_20px_var(--color-card-shadow)] transition-all duration-300">
         <div class="relative z-10 space-y-3">
-          <h1 class="text-5xl font-bold tracking-tight leading-tight">Musa Kavak</h1>
-          <p class="text-xl text-[var(--color-icon)]">Full Stack Software Engineer</p>
+          <h1 class="text-5xl font-bold tracking-tight leading-tight">{{ uiText.name }}</h1>
+          <p class="text-xl text-[var(--color-icon)]">{{ uiText.title }}</p>
           <p class="mt-3 text-[var(--color-icon)] max-w-2xl">
-            I love building things that are simple, useful, and enjoyable to use. Most of my time goes into turning
-            small ideas into real, working projects that people can actually benefit from.
+            {{ uiText.description }}
           </p>
         </div>
       </section>
@@ -95,17 +94,17 @@
           <h2 class="text-xl font-semibold">Contact</h2>
         </div>
         <div class="space-y-2 text-sm text-[var(--color-icon)]">
-          <a href="mailto:musa0kavak@gmail.com" target="_blank"
+          <a :href="`mailto:${uiText.contactEmail}`" target="_blank"
             class="hover:text-[var(--color-link-hover)] flex items-center gap-2">
-            <Mail class="w-4 h-4" /> musa0kavak@gmail.com
+            <Mail class="w-4 h-4" /> {{ uiText.contactEmail }}
           </a>
-          <a href="https://linkedin.com/in/musakavak" target="_blank"
+          <a :href="uiText.linkedinUrl" target="_blank"
             class="hover:text-[var(--color-link-hover)] flex items-center gap-2">
-            <Linkedin class="w-4 h-4" /> linkedin.com/in/musakavak
+            <Linkedin class="w-4 h-4" /> {{ uiText.linkedinUrl.replace('https://', '') }}
           </a>
-          <a href="https://github.com/musakavak" target="_blank"
+          <a :href="uiText.githubUrl" target="_blank"
             class="hover:text-[var(--color-link-hover)] flex items-center gap-2">
-            <Github class="w-4 h-4" /> github.com/musakavak
+            <Github class="w-4 h-4" /> {{ uiText.githubUrl.replace('https://', '') }}
           </a>
         </div>
       </section>
@@ -158,14 +157,14 @@
           <h2 class="text-xl font-semibold">Now</h2>
         </div>
         <p class="text-sm text-[var(--color-icon)]">
-          Currently focused on building and experimenting with virtualization and infrastructure systems.
+          {{ uiText.nowText }}
         </p>
       </section>
 
       <section
         class="md:col-span-4 lg:col-span-3 md:order-4 border border-[var(--color-border)] rounded-2xl p-6 flex flex-col justify-end backdrop-blur-sm hover:shadow-[0_0_15px_var(--color-card-shadow)] transition-all duration-300">
         <p class="text-sm text-right text-[var(--color-icon)]">
-          Built with Vue, Tailwind, Lucide @ 2025 Musa Kavak
+          {{ uiText.footerText }}
         </p>
       </section>
 
@@ -256,6 +255,7 @@
     Moon,
   } from "lucide-vue-next";
   import { ref, watch, nextTick, onBeforeUnmount, onMounted } from "vue";
+  import { projects, jobs, education, blogs, techs, uiText } from "./config.js";
 
   const isVideo = (src) => typeof src === 'string' && /\.mp4(\?.*)?$/i.test(src);
 
@@ -294,105 +294,6 @@
   onMounted(() => {
     document.documentElement.setAttribute('data-theme', theme.value);
   });
-
-  const projects = [
-    {
-      title: "University Map",
-      desc: "A nationwide platform built with Nuxt and Vue that helps students explore universities across Türkiye. Reached over 15,000 monthly users with an interactive, map-based interface.",
-      thumbnail: "/universite-haritasi.mp4",
-      technologies: ["Vue.js", "Nuxt.js", "PostgreSQL", "Drizzle ORM", "Nginx", "AWS", "Docker", "Leaflet"],
-      liveLink: "https://universiteharitasi.com",
-      year: 2025,
-    },
-    {
-      title: "Bir Siparişim Var",
-      desc: "An all-in-one restaurant management system that connects customers, waiters, and cashiers. It handles everything from digital menus and order tracking to inventory, reports, and performance-based bonuses.",
-      thumbnail: "/siparisver.webp",
-      technologies: ["Vue.js", ".NET", "Web API", "WebSockets", "Multi-Tenant", "JWT", "PostgreSQL", "Chart.js"],
-      year: 2024,
-    },
-    {
-      title: "AI CV Formatter",
-      desc: "A Next.js app that simplifies CV formatting and text extraction using AI. It can analyze DOCX files, edit content dynamically, and structure CV data based on defined schemas.",
-      thumbnail: "/ai-cv-formatter.webp",
-      technologies: ["React", "Next.js", "docx", "AI SDK"],
-      link: "https://github.com/musakavak/ai-cv-formatter/",
-      liveLink: "https://musakavak.github.io/ai-cv-formatter/",
-      year: 2025,
-    },
-  ];
-
-
-  const jobs = [
-    {
-      role: "Software Programming Instructor",
-      company: "Nova IT Academy",
-      period: "June 2025 – Present"
-    },
-    {
-      role: "Co-Founder",
-      company: "Softsprout",
-      period: "December 2024 – Present"
-    },
-    {
-      role: "Full Stack Developer",
-      company: "Busiwapp Technology Software and Innovation",
-      period: "June 2025 – August 2025"
-    },
-    {
-      role: "Web Developer",
-      company: "KTC Information Technologies",
-      period: "July 2024 – August 2024"
-    }
-  ];
-
-  const education = [
-    {
-      degree: "Computer Programming",
-      institution: "Konya Technical University — 2023–2025"
-    }
-  ];
-
-
-
-  const blogs = [
-    {
-      title: "Develop Desktop Apps With Javascript",
-      url: "https://medium.com/p/e7005932e57a",
-      thumbnail: "/desktop-apps.webp",
-    }
-  ];
-
-  const techs = [
-    "React",
-    "Next.js",
-    "Vue.js",
-    "Nuxt.js",
-    "Tailwind CSS",
-    "TypeScript",
-
-    "C#",
-    ".NET",
-    "Node.js",
-    "Python",
-    "PostgreSQL",
-    "Rust",
-
-    "Flutter",
-    "React Native",
-    "Kotlin",
-
-    "Docker",
-    "AWS",
-    "Nginx",
-
-    "Python",
-    "TensorFlow",
-    "PyTorch",
-    "AI API",
-  ];
-
-
 
   const activeProject = ref(null);
   const closeBtnRef = ref(null);
