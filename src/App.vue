@@ -38,49 +38,62 @@
       <section
         class="md:col-span-8 lg:col-span-7 md:order-2 border border-[var(--color-border)] rounded-2xl overflow-hidden backdrop-blur-sm hover:shadow-[0_0_25px_var(--color-card-shadow)] transition-all duration-300">
         <div class="flex items-center gap-2 p-4 md:p-5">
-          <!-- <div class="flex items-center justify-between p-4 md:p-5 border-b border-[var(--color-border)]"> -->
           <Code class="w-5 h-5 text-[var(--color-icon)]" />
-          <h2 class="text-xl font-semibold">Featured Projects</h2>
-          <!-- <a href="#" class="text-sm text-[var(--color-icon)] hover:text-[var(--color-link-hover)]">All Projects</a> -->
+          <h2 class="text-xl font-semibold">Projects</h2>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4 md:p-5">
-          <div v-for="(p, i) in projects" :key="i" :class="[
-            'group cursor-pointer rounded-xl border border-[var(--color-border)] hover:border-[var(--color-border-hover)] transition-all duration-300 overflow-hidden bg-[var(--color-card-bg)]',
+          <div v-for="(p, i) in (showAllProjects ? projects : projects.slice(0, 3))" :key="i" :class="[
+            'group cursor-pointer rounded-xl border border-[var(--color-border)] hover:border-[var(--color-border-hover)] transition-all duration-300 overflow-hidden bg-[var(--color-card-bg)] flex flex-col',
             i === 0 ? 'md:col-span-2 md:row-span-2' : ''
           ]" @click="openProject(p)">
             <!-- Thumbnail -->
-            <div class="relative bg-[var(--color-modal-media-bg)] flex items-center justify-center">
-              <video v-if="isVideo(p.thumbnail)" :src="p.thumbnail" :class="i === 0 ? 'h-full' : 'h-48 md:h-52'"
-                class="w-full object-contain opacity-90 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-300"
+            <div :class="[
+              'relative bg-[var(--color-modal-media-bg)] flex items-center justify-center flex-shrink-0',
+              i === 0 ? 'aspect-[16/10]' : 'aspect-[16/9]'
+            ]">
+              <video v-if="isVideo(p.thumbnail)" :src="p.thumbnail"
+                class="w-full h-full object-contain opacity-90 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-300"
                 autoplay muted loop playsinline />
-              <img v-else :src="p.thumbnail" :alt="p.title" :class="i === 0 ? 'h-full' : 'h-48 md:h-52'"
-                class="w-full object-contain opacity-90 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-300" />
+              <img v-else :src="p.thumbnail" :alt="p.title"
+                class="w-full h-full object-contain opacity-90 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-300" />
             </div>
 
             <!-- Title -->
-            <div class="p-3 md:p-4 border-t border-[var(--color-border)]">
+            <div class="p-3 md:p-4 border-t border-[var(--color-border)] flex-shrink-0">
               <h3
-                class="text-sm md:text-base font-medium text-[var(--color-text)] group-hover:text-[var(--color-link-hover)] transition">
+                class="text-sm md:text-base font-medium text-[var(--color-text)] group-hover:text-[var(--color-link-hover)] transition line-clamp-2">
                 {{ p.title }}
               </h3>
             </div>
           </div>
         </div>
+
+        <!-- Show More/Less Button -->
+        <div v-if="projects.length > 3" class="p-4 border-t border-[var(--color-border)] flex justify-center">
+          <button @click="showAllProjects = !showAllProjects"
+            class="px-6 py-2 rounded-lg border border-[var(--color-border)] hover:border-[var(--color-border-hover)] text-[var(--color-text)] hover:text-[var(--color-link-hover)] transition-all duration-300 flex items-center gap-2 group">
+            <span>{{ showAllProjects ? 'Show Less' : `Show All Projects (${projects.length})` }}</span>
+            <svg :class="['w-4 h-4 transition-transform duration-300', showAllProjects ? 'rotate-180' : '']" fill="none"
+              stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+        </div>
       </section>
 
       <!-- EXPERIENCE -->
       <section
-        class="md:col-span-4 lg:col-span-5 md:order-2 border border-[var(--color-border)] rounded-2xl p-6 flex flex-col justify-between backdrop-blur-sm hover:shadow-[0_0_15px_var(--color-card-shadow)] transition-all duration-300">
+        class="md:col-span-4 lg:col-span-5 md:order-2 border border-[var(--color-border)] rounded-2xl p-6 flex flex-col backdrop-blur-sm hover:shadow-[0_0_15px_var(--color-card-shadow)] transition-all duration-300">
         <div class="flex items-center gap-2 mb-4">
           <Briefcase class="w-5 h-5 text-[var(--color-icon)]" />
           <h2 class="text-xl font-semibold">Experience</h2>
         </div>
-        <ul class="space-y-3">
+        <ul class="space-y-3 sticky bottom-6 mt-auto pt-15">
           <li v-for="(job, i) in jobs" :key="i">
             <h3 class="font-medium">{{ job.role }}</h3>
             <p class="text-[var(--color-icon)] text-sm">
-              {{ job.company }} — {{ job.period }}
+              {{ job.company }}, {{ job.period }}
             </p>
           </li>
         </ul>
@@ -260,6 +273,7 @@
   const isVideo = (src) => typeof src === 'string' && /\.mp4(\?.*)?$/i.test(src);
 
   const theme = ref(localStorage.getItem('theme') || 'dark');
+  const showAllProjects = ref(false)
   const showFlashbang = ref(false);
   const flashbangActive = ref(false)
   const flashbangDuration = 2500
