@@ -183,9 +183,9 @@
 
       <!-- Project Modal -->
       <div v-if="activeProject" class="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
-        <div class="absolute inset-0 bg-[var(--color-modal-bg)]" @click="closeProject"></div>
+        <div class="h-full fixed inset-0 bg-[var(--color-modal-bg)]" @click="closeProject"></div>
         <div
-          class="relative z-10 w-full max-w-5xl rounded-2xl border border-[var(--color-border)] bg-gradient-to-br from-[var(--color-modal-card-bg-from)] to-[var(--color-modal-card-bg-to)] backdrop-blur-xl p-6 md:p-8 shadow-2xl my-8"
+          class="relative z-10 w-full max-w-5xl max-h-4/5  overflow-y-auto rounded-2xl border border-[var(--color-border)] bg-gradient-to-br from-[var(--color-modal-card-bg-from)] to-[var(--color-modal-card-bg-to)] backdrop-blur-xl p-6 md:p-8 my-8"
           role="dialog" aria-modal="true" aria-labelledby="project-dialog-title">
 
           <!-- Header -->
@@ -217,7 +217,7 @@
             </template>
             <img v-else-if="activeProject && activeProject.thumbnail" :src="activeProject.thumbnail"
               :alt="activeProject.title" loading="lazy" decoding="async"
-              class="w-full object-contain bg-[var(--color-modal-media-bg)]" />
+              class="w-full max-h-200 object-contain bg-[var(--color-modal-media-bg)]" />
           </div>
 
           <!-- Technologies -->
