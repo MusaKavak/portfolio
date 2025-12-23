@@ -15,6 +15,23 @@ export const projects = [
         year: 2024,
     },
     {
+        title: "Konya Student Social Platform",
+        desc: "A government-supported social platform built under the Divizyon community for university students in Konya. Enables students to ask questions, share experiences, access announcements, and interact through topic-based discussions. Features search, categorization, engagement metrics, and community-driven content in a modern, scalable architecture.",
+        thumbnail: "/konya-genc.webp",
+        technologies: ["Figma", "Next.js", "Tailwind", "Leaflet"],
+        liveLink: "https://wikonya.vercel.app/",
+        link: "https://github.com/dogancanyildiz/wikonya",
+        year: 2025,
+    },
+    {
+        title: "Credit Analysis Platform",
+        desc: "A web-based credit analysis and reporting platform developed under the Divizyon community for İnteraktif Kredi, a company that supports individuals who struggle to obtain loans from traditional banks. The system presents detailed credit reports, financial summaries, risk indicators, and user-friendly visualizations to help advisors guide clients toward better financial decisions.",
+        thumbnail: "/interaktif-kredi.webp",
+        technologies: [".NET", "Razor Pages", "C#", "SCSS", "HTML", "JavaScript"],
+        link: "https://github.com/MusaKavak/softsprout-fintech",
+        year: 2025,
+    },
+    {
         title: "AI CV Formatter",
         desc: "A Next.js app that analyzes CVs and job descriptions using AI, then dynamically rewrites and structures the CV. Includes DOCX parsing, content editing, and schema-driven formatting.",
         thumbnail: "/ai-cv-formatter.webp",
@@ -79,7 +96,7 @@ export const projects = [
         thumbnail: "/barber-appointment.webp",
         technologies: ["React", "Next.js", "shadcn/ui", "Tailwind"],
         link: "https://github.com/MusaKavak/barber-appointment",
-        liveLink: "https://musakavak.github.io/barber-appointment//",
+        liveLink: "https://musakavak.github.io/barber-appointment/",
         year: 2025,
     },
 ];
@@ -87,14 +104,14 @@ export const projects = [
 
 export const jobs = [
     {
-        role: "Software Programming Instructor",
-        company: "Nova IT Academy",
-        period: "June 2025 – Present"
-    },
-    {
-        role: "Co-Founder",
+        role: "Full Stack Developer",
         company: "Softsprout",
         period: "December 2024 – Present"
+    },
+    {
+        role: "Software Programming Instructor",
+        company: "Nova IT Academy",
+        period: "June 2025 – December 2025"
     },
     {
         role: "Full Stack Developer",
@@ -134,7 +151,6 @@ export const techs = [
     "C#",
     ".NET",
     "Node.js",
-    "Python",
     "PostgreSQL",
     "Rust",
 
@@ -149,7 +165,8 @@ export const techs = [
     "Python",
     "TensorFlow",
     "PyTorch",
-    "AI API",
+    "AI SDK",
+    "Langchain"
 ];
 
 export const uiText = {
@@ -159,7 +176,7 @@ export const uiText = {
     contactEmail: "musa0kavak@gmail.com",
     linkedinUrl: "https://linkedin.com/in/musakavak",
     githubUrl: "https://github.com/musakavak",
-    footerText: "Built with Vue, Tailwind, Lucide @ 2025 Musa Kavak",
+    footerText: "Built with Vue, Tailwind, Lucide © 2025 Musa Kavak",
     nowText: "Currently focused on building and experimenting with virtualization and infrastructure systems.",
 
     // SEO related fields
